@@ -1,0 +1,57 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Empresas {
+  ID          String  @id @default(uuid())
+  RAZAO       String  @db.VarChar(150)
+  FANTASIA    String  @db.VarChar(150)
+  SIGLA       String? @db.VarChar(5)
+  CNPJ        String  @db.VarChar(14)
+  IE          String  @db.VarChar(14)
+  REGIME      String  @db.Char(1)
+  CEP         String  @db.Char(8)
+  IM          String? @db.VarChar(20)
+  CNAE        String  @db.VarChar(20)
+  ENDERECO    String  @db.VarChar(150)
+  NUMERO      String  @db.VarChar(10)
+  COMPLEMENTO String? @db.VarChar(50)
+  REFERENCIA  String? @db.VarChar(50)
+  BAIRRO      String  @db.VarChar(150)
+  CIDADEIBGE  String  @db.Char(7)
+  CIDADE      String  @db.VarChar(150)
+  UF          String  @db.Char(2)
+  EMAIL       String
+  TELEFONE1   String  @db.VarChar(13)
+  TELEFONE2   String? @db.VarChar(13)
+  TELEFONE3   String? @db.VarChar(13)
+  LOGONFE     String?
+  LOGONFSE    String?
+  LOGOEMPRESA String?
+  WEB         String? @db.VarChar(200)
+  ATIVO       Boolean @default(true)
+
+  Usuario Usuarios[]
+
+  @@map("TBUTIL001")
+}
+
+model Usuarios {
+  ID      String  @id @default(uuid())
+  NOME    String  @db.VarChar(100)
+  EMAIL   String  @unique @db.VarChar(100)
+  SENHA   String
+  SETOR   String
+  ATIVO   Boolean @default(true)
+  EMPRESA String
+
+  Empresa Empresas @relation(fields: [EMPRESA], references: [ID])
+}

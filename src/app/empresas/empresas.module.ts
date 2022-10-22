@@ -1,0 +1,10 @@
+import { PrismaService } from './../../prisma/prisma.service';
+import { Module } from '@nestjs/common';
+import { EmpresasService } from './empresas.service';
+import { EmpresasController } from './empresas.controller';
+
+@Module({
+  controllers: [EmpresasController],
+  providers: [EmpresasService, PrismaService]
+})
+export class EmpresasModule { }
