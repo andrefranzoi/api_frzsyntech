@@ -1,103 +1,103 @@
-import { IsNotEmpty, IsOptional, IsString } from 'class-validator'
+import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator'
 
 export class CreateEmpresaDto {
   @IsString()
   @IsNotEmpty()
-  RAZAO: string;
+  RAZAO
 
   @IsString()
   @IsNotEmpty()
-  FANTASIA: string;
+  FANTASIA
 
   @IsString()
   @IsOptional()
-  SIGLA: string;
+  SIGLA
 
   @IsString()
   @IsNotEmpty()
-  CNPJ: string;
+  CNPJ
 
   @IsString()
   @IsNotEmpty()
-  IE: string;
-
-  @IsString()
-  @IsNotEmpty()
-  REGIME: string;
-
-  @IsString()
-  @IsNotEmpty()
-  CEP: string;
+  IE
 
   @IsString()
   @IsOptional()
-  IM: string;
+  IM
 
   @IsString()
   @IsNotEmpty()
-  CNAE: string;
+  CNAE
 
   @IsString()
   @IsNotEmpty()
-  ENDERECO: string;
+  CEP
 
   @IsString()
   @IsNotEmpty()
-  NUMERO: string;
+  ENDERECO
+
+  @IsString()
+  @IsNotEmpty()
+  NUM
 
   @IsString()
   @IsOptional()
-  COMPLEMENTO: string;
-
-  @IsString()
-  @IsOptional()
-  REFERENCIA: string;
+  COMPLEMENTO
 
   @IsString()
   @IsNotEmpty()
-  BAIRRO: string;
+  BAIRRO
 
   @IsString()
   @IsNotEmpty()
-  CIDADEIBGE: string;
+  CIDADE_IBGE
 
   @IsString()
   @IsNotEmpty()
-  CIDADE: string;
+  CIDADE
 
   @IsString()
   @IsNotEmpty()
-  UF: string;
+  CODUF
 
   @IsString()
   @IsNotEmpty()
-  EMAIL: string;
+  UF
 
   @IsString()
   @IsNotEmpty()
-  TELEFONE1: string;
+  PAIS
+
+  @IsString()
+  @IsNotEmpty()
+  TELEFONE1
 
   @IsString()
   @IsOptional()
-  TELEFONE2: string;
+  TELEFONE2
 
   @IsString()
   @IsOptional()
-  TELEFONE3: string;
+  TELEFONE3
+
+  @IsString()
+  @IsNotEmpty()
+  EMAIL
 
   @IsString()
   @IsOptional()
-  LOGONFE: string;
+  SITE
 
   @IsString()
   @IsOptional()
-  LOGONFSE: string;
+  CONTATO
 
   @IsString()
-  @IsOptional()
-  LOGOEMPRESA: string;
+  @IsNotEmpty()
+  REGIME
 
-  @IsString()
-  @IsOptional()
-  WEB: string;
+  @IsBoolean()
+  @IsNotEmpty()
+  ATIVO
 }

@@ -10,40 +10,42 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+//ANCHOR - *** EMPRESAS ***
 model Empresas {
   ID          String  @id @default(uuid())
   RAZAO       String  @db.VarChar(150)
-  FANTASIA    String  @db.VarChar(150)
+  FANTASIA    String  @db.VarChar(120)
   SIGLA       String? @db.VarChar(5)
   CNPJ        String  @db.VarChar(14)
   IE          String  @db.VarChar(14)
-  REGIME      String  @db.Char(1)
-  CEP         String  @db.Char(8)
   IM          String? @db.VarChar(20)
   CNAE        String  @db.VarChar(20)
+  CEP         String  @db.Char(8)
   ENDERECO    String  @db.VarChar(150)
-  NUMERO      String  @db.VarChar(10)
-  COMPLEMENTO String? @db.VarChar(50)
-  REFERENCIA  String? @db.VarChar(50)
-  BAIRRO      String  @db.VarChar(150)
-  CIDADEIBGE  String  @db.Char(7)
-  CIDADE      String  @db.VarChar(150)
+  NUM         String  @db.VarChar(10)
+  COMPLEMENTO String  @db.VarChar(50)
+  BAIRRO      String  @db.VarChar(100)
+  CIDADE_IBGE String  @db.Char(7)
+  CIDADE      String  @db.VarChar(100)
+  CODUF       String  @db.Char(2)
   UF          String  @db.Char(2)
-  EMAIL       String
+  PAIS        String  @db.VarChar(50)
   TELEFONE1   String  @db.VarChar(13)
   TELEFONE2   String? @db.VarChar(13)
   TELEFONE3   String? @db.VarChar(13)
-  LOGONFE     String?
-  LOGONFSE    String?
-  LOGOEMPRESA String?
-  WEB         String? @db.VarChar(200)
+  EMAIL       String  @db.VarChar(250)
+  SITE        String? @db.VarChar(250)
+  CONTATO     String? @db.VarChar(80)
+  REGIME      String  @db.Char(2)
   ATIVO       Boolean @default(true)
 
-  Usuario Usuarios[]
+  Usuario  Usuarios[]
+  Clientes Clientes[]
 
   @@map("TBUTIL001")
 }
 
+//ANCHOR - *** USUÁRIOS ***
 model Usuarios {
   ID      String  @id @default(uuid())
   NOME    String  @db.VarChar(100)
@@ -52,6 +54,92 @@ model Usuarios {
   SETOR   String
   ATIVO   Boolean @default(true)
   EMPRESA String
+  TIPO    String  @db.Char(2) // A - Admin || G - Gerente || U - Usuário || V - Vendedor
 
   Empresa Empresas @relation(fields: [EMPRESA], references: [ID])
+
+  @@map("TBUTIL002")
+}
+
+//ANCHOR - *** CLIENTES ***
+model Clientes {
+  IDCLIENTE         Int         @id @default(autoincrement())
+  RAZAONOME         String      @db.VarChar(120)
+  FANTASIASOBRENOME String      @db.VarChar(100)
+  SIGLA             String?     @db.VarChar(3)
+  TIPOPESSOA        String      @db.Char(1)
+  CPFCNPJ           String      @db.VarChar(14)
+  RGIE              String      @db.VarChar(14)
+  CEP               String?     @db.Char(8)
+  ENDERECO          String?     @db.VarChar(150)
+  NUM               String?     @db.VarChar(10)
+  COMPLEMENTO       String?     @db.VarChar(50)
+  BAIRRO            String?     @db.VarChar(100)
+  CIDADE_IBGE       String?     @db.Char(7)
+  CIDADE            String?     @db.VarChar(100)
+  CODUF             String?     @db.Char(2)
+  UF                String?     @db.Char(2)
+  PAIS              String?     @db.VarChar(50)
+  CONTATO           String?     @db.VarChar(80)
+  TELEFONE1         String      @db.VarChar(13)
+  TELEFONE2         String?     @db.VarChar(13)
+  FORMAPAG          String?
+  EMAIL             String?     @db.VarChar(250)
+  SITE              String?     @db.VarChar(250)
+  TRANSPORTADORA    String?
+  REGIAO            String?
+  VENDEDOR          String?
+  TIPOCONTRIB       String?     @db.Char(2)
+  BLOQUEARCREDITO   String?     @db.Char(1)
+  DATAPROTESTO      DateTime?
+  LIMITECREDITO     Decimal?    @default(0)
+  RAMOATIVIDADE     String?
+  DATANASC          DateTime?
+  OBSERVACAO        String?
+  DATACAD           DateTime    @default(now())
+  USERCAD           String
+  DATAALT           DateTime?
+  USERALT           String?
+  EMPRESA           String
+  ATIVO             Boolean     @default(true)
+  Enderecos         Enderecos[]
+  Telefones         Telefones[]
+
+  Empresas Empresas @relation(fields: [EMPRESA], references: [ID])
+
+  @@map("TBCLI001")
+}
+
+//ANCHOR - *** ENDERECOS ***
+model Enderecos {
+  IDENDERECO  String  @id @default(uuid())
+  IDCLIENTE   Int?
+  TIPO        String  @db.Char(1)
+  ATIVO       Boolean @default(true)
+  ENDERECO    String  @db.VarChar(150)
+  NUM         String  @db.VarChar(10)
+  COMPLEMENTO String  @db.VarChar(50)
+  REFERENCIA  String  @db.VarChar(50)
+  BAIRRO      String  @db.VarChar(100)
+  CIDADE_IBGE String  @db.Char(7)
+  CIDADE      String  @db.VarChar(100)
+  CODUF       String  @db.Char(2)
+  UF          String  @db.Char(2)
+  PAIS        String  @db.VarChar(50)
+
+  Clientes Clientes? @relation(fields: [IDCLIENTE], references: [IDCLIENTE], onDelete: NoAction, onUpdate: NoAction)
+
+  @@map("TBCAD001")
+}
+
+//ANCHOR - *** TELEFONES ***
+model Telefones {
+  IDTELEFONE String  @id @default(uuid())
+  IDCLIENTE  Int?
+  TIPO       String  @db.Char(1)
+  NUMERO     String? @db.VarChar(10)
+
+  Clientes Clientes? @relation(fields: [IDCLIENTE], references: [IDCLIENTE], onDelete: NoAction, onUpdate: NoAction)
+
+  @@map("TBUTIL004")
 }
