@@ -12,20 +12,28 @@ export class ClientesService {
       data: createClienteDto
     })
 
-    console.log('cadastro:', ret)
-    return ret
+    return await ret
   }
 
-  findAll() {
-    return `This action returns all clientes`;
+  async findAll(sCodEmpresa: string) {
+    return await this.prisma.clientes.findMany({
+      where: {
+        EMPRESA: sCodEmpresa
+      }
+    })
   }
 
   findOne(id: number) {
     return `This action returns a #${id} cliente`;
   }
 
-  update(id: number, updateClienteDto: UpdateClienteDto) {
-    return `This action updates a #${id} cliente`;
+  async update(IDCLIENTE: number, updateClienteDto: UpdateClienteDto) {
+    return await this.prisma.clientes.update({
+      data: updateClienteDto,
+      where: {
+        IDCLIENTE
+      }
+    })
   }
 
   remove(id: number) {

@@ -8,14 +8,16 @@ export class ClientesController {
   constructor(private readonly clientesService: ClientesService) {}
 
   @Post()
-  create(@Body() createClienteDto: CreateClienteDto) {
-    console.log('createClienteDto:', createClienteDto)
-    return this.clientesService.create(createClienteDto);
+  async create(@Body() createClienteDto: CreateClienteDto) {
+    const RETORNO = await this.clientesService.create(createClienteDto);
+    console.log('Gravou:', RETORNO)
+
+    return await RETORNO
   }
 
-  @Get()
-  findAll() {
-    return this.clientesService.findAll();
+  @Get(':sCodEmpresa')
+  async findAll(@Param('sCodEmpresa') sCodEmpresa: string) {
+    return await this.clientesService.findAll(sCodEmpresa);
   }
 
   @Get(':id')
@@ -24,8 +26,8 @@ export class ClientesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateClienteDto: UpdateClienteDto) {
-    return this.clientesService.update(+id, updateClienteDto);
+  async update(@Param('id') id: string, @Body() updateClienteDto: UpdateClienteDto) {
+    return await this.clientesService.update(+id, updateClienteDto);
   }
 
   @Delete(':id')

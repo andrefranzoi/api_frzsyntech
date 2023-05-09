@@ -12,8 +12,8 @@ export class EmpresasController {
     return this.empresasService.create(createEmpresaDto);
   }
 
-  @Get()
-  findAll() {
+  @Get(':sCodEmpresa')
+  findAll(@Param('sCodEmpresa') sCodEmpresa: string) {
     return this.empresasService.findAll();
   }
 

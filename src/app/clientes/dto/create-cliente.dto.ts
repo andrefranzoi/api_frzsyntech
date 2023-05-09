@@ -1,9 +1,8 @@
+import { Decimal } from '@prisma/client/runtime';
 import {
   IsBoolean,
   IsDateString,
-  isDateString,
   IsDecimal,
-  isNotEmpty,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -12,149 +11,125 @@ import {
 export class CreateClienteDto {
   @IsString()
   @IsNotEmpty()
-  RAZAONOME
+  NOME: string;
 
   @IsString()
   @IsNotEmpty()
-  FANTASIASOBRENOME
+  SOBRENOME: string;
 
   @IsString()
   @IsOptional()
-  SIGLA
+  SIGLA: string;
 
   @IsString()
   @IsNotEmpty()
-  TIPOPESSOA
-
-  @IsString()
-  @IsNotEmpty()
-  CPFCNPJ
-
-  @IsString()
-  @IsNotEmpty()
-  RGIE
+  TIPOPESSOA: string;
 
   @IsString()
   @IsOptional()
-  CEP
+  CPFCNPJ: string;
 
   @IsString()
   @IsOptional()
-  ENDERECO
+  RGIE: string;
 
   @IsString()
   @IsOptional()
-  NUM
+  CEP: string;
 
   @IsString()
   @IsOptional()
-  COMPLEMENTO
+  ENDERECO: string;
 
   @IsString()
   @IsOptional()
-  BAIRRO
+  NUM: string;
 
   @IsString()
   @IsOptional()
-  CIDADE_IBGE
+  COMPLEMENTO: string;
 
   @IsString()
   @IsOptional()
-  CIDADE
+  BAIRRO: string;
 
   @IsString()
   @IsOptional()
-  CODUF
+  CIDADE_IBGE: string;
 
   @IsString()
   @IsOptional()
-  UF
+  CIDADE: string;
 
   @IsString()
   @IsOptional()
-  PAIS
+  CODUF: string;
 
   @IsString()
   @IsOptional()
-  CONTATO
-
-  @IsString()
-  @IsNotEmpty()
-  TELEFONE1
+  UF: string;
 
   @IsString()
   @IsOptional()
-  TELEFONE2
+  CONTATO: string;
 
   @IsString()
   @IsOptional()
-  FORMAPAG
+  TELEFONE1: string;
 
   @IsString()
   @IsOptional()
-  EMAIL
+  TELEFONE2: string;
 
   @IsString()
   @IsOptional()
-  SITE
+  FORMAPAG: string;
 
   @IsString()
   @IsOptional()
-  TRANSPORTADORA
+  EMAIL: string;
 
   @IsString()
   @IsOptional()
-  REGIAO
+  PRESTADOR: string;
 
   @IsString()
   @IsOptional()
-  VENDEDOR
+  BLOQUEARCREDITO: string;
 
-  @IsString()
+  @IsDateString()
   @IsOptional()
-  TIPOCONTRIB
-
-  @IsString()
-  @IsOptional()
-  BLOQUEARCREDITO
-
-  @IsString()
-  @IsOptional()
-  DATAPROTESTO
+  DATAPROTESTO: Date;
 
   @IsDecimal()
   @IsOptional()
-  LIMITECREDITO
+  LIMITECREDITO: Decimal;
 
   @IsString()
   @IsOptional()
-  RAMOATIVIDADE
+  DATANASC: Date;
 
   @IsString()
   @IsOptional()
-  DATANASC
+  OBSERVACAO: string;
 
   @IsString()
   @IsOptional()
-  OBSERVACAO
+  USERCAD: string;
 
-  @IsString()
-  @IsNotEmpty()
-  USERCAD
+  @IsDateString()
+  @IsOptional()
+  DATAALT: Date;
 
   @IsString()
   @IsOptional()
-  DATAALT
+  USERALT: string;
 
   @IsString()
   @IsOptional()
-  USERALT
+  EMPRESA: string;
 
-  @IsString()
-  @IsNotEmpty()
-  EMPRESA
-
-  @IsString()
-  @IsNotEmpty()
-  ATIVO
+  @IsBoolean()
+  @IsOptional()
+  ATIVO: boolean;
 }
