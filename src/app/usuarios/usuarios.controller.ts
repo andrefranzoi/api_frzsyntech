@@ -12,23 +12,23 @@ export class UsuariosController {
     return this.usuariosService.create(createUsuarioDto);
   }
 
-  @Get()
-  findAll() {
-    return this.usuariosService.findAll();
+  @Get(':idEmpresa')
+  findAll(@Param('idEmpresa') idEmpresa: string) {
+    return this.usuariosService.findAll(idEmpresa);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usuariosService.findOne(+id);
+  @Get(':idUsuario')
+  findOne(@Param('idUsuario') idUsuario: string) {
+    return this.usuariosService.findOne(idUsuario);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUsuarioDto: UpdateUsuarioDto) {
-    return this.usuariosService.update(+id, updateUsuarioDto);
+  @Patch(':idUsuario')
+  update(@Param('idUsuario') idUsuario: string, @Body() updateUsuarioDto: UpdateUsuarioDto) {
+    return this.usuariosService.update(idUsuario, updateUsuarioDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.usuariosService.remove(+id);
+  @Delete(':idUsuario')
+  remove(@Param('idUsuario') idUsuario: string) {
+    return this.usuariosService.remove(idUsuario);
   }
 }

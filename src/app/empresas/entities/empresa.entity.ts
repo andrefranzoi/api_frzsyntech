@@ -1,6 +1,10 @@
 import { Empresas } from '@prisma/client'
+import { Decimal } from '@prisma/client/runtime';
 
 export class EmpresaEntity implements Empresas {
+  SIMPLES: Decimal;
+  PIS: Decimal;
+  COFINS: Decimal;
   ID: string;
   RAZAO: string;
   FANTASIA: string;

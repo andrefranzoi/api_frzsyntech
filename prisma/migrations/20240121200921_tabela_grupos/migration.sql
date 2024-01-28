@@ -1,0 +1,13 @@
+-- CreateTable
+CREATE TABLE "Grupos" (
+    "IDGRUPO" SERIAL NOT NULL,
+    "NOME" VARCHAR(50) NOT NULL,
+    "ATIVO" CHAR(1),
+    "ACRESCIMO" CHAR(1),
+    "SABORES" CHAR(1),
+    "KIT" CHAR(1),
+    "EXIBEVENDA" CHAR(1),
+    "ICONE" VARCHAR(80) NOT NULL,
+
+    CONSTRAINT "Grupos_pkey" PRIMARY KEY ("IDGRUPO")
+);

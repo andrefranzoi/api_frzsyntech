@@ -12,32 +12,35 @@ datasource db {
 
 //ANCHOR - *** EMPRESAS ***
 model Empresas {
-  ID          String  @id @default(uuid())
-  RAZAO       String  @db.VarChar(150)
-  FANTASIA    String  @db.VarChar(120)
-  SIGLA       String? @db.VarChar(5)
-  CNPJ        String  @db.VarChar(14)
-  IE          String  @db.VarChar(14)
-  IM          String? @db.VarChar(20)
-  CNAE        String  @db.VarChar(20)
-  CEP         String  @db.Char(8)
-  ENDERECO    String  @db.VarChar(150)
-  NUM         String  @db.VarChar(10)
-  COMPLEMENTO String  @db.VarChar(50)
-  BAIRRO      String  @db.VarChar(100)
-  CIDADE_IBGE String  @db.Char(7)
-  CIDADE      String  @db.VarChar(100)
-  CODUF       String  @db.Char(2)
-  UF          String  @db.Char(2)
-  PAIS        String  @db.VarChar(50)
-  TELEFONE1   String  @db.VarChar(13)
-  TELEFONE2   String? @db.VarChar(13)
-  TELEFONE3   String? @db.VarChar(13)
-  EMAIL       String  @db.VarChar(250)
-  SITE        String? @db.VarChar(250)
-  CONTATO     String? @db.VarChar(80)
-  REGIME      String  @db.Char(2)
-  ATIVO       Boolean @default(true)
+  ID          String   @id @default(uuid())
+  RAZAO       String   @db.VarChar(150)
+  FANTASIA    String   @db.VarChar(120)
+  SIGLA       String?  @db.VarChar(5)
+  CNPJ        String   @db.VarChar(14)
+  IE          String   @db.VarChar(14)
+  IM          String?  @db.VarChar(20)
+  CNAE        String   @db.VarChar(20)
+  CEP         String   @db.Char(8)
+  ENDERECO    String   @db.VarChar(150)
+  NUM         String   @db.VarChar(10)
+  COMPLEMENTO String   @db.VarChar(50)
+  BAIRRO      String   @db.VarChar(100)
+  CIDADE_IBGE String   @db.Char(7)
+  CIDADE      String   @db.VarChar(100)
+  CODUF       String   @db.Char(2)
+  UF          String   @db.Char(2)
+  PAIS        String   @db.VarChar(50)
+  TELEFONE1   String   @db.VarChar(13)
+  TELEFONE2   String?  @db.VarChar(13)
+  TELEFONE3   String?  @db.VarChar(13)
+  EMAIL       String   @db.VarChar(250)
+  SITE        String?  @db.VarChar(250)
+  CONTATO     String?  @db.VarChar(80)
+  REGIME      String   @db.Char(2)
+  ATIVO       Boolean  @default(true)
+  SIMPLES     Decimal? @default(0)
+  PIS         Decimal? @default(0)
+  COFINS      Decimal? @default(0)
 
   Usuario  Usuarios[]
   Clientes Clientes[]
@@ -57,6 +60,7 @@ model Usuarios {
   TIPO    String  @db.Char(2) // U - Usuário | P - Prestador | A - Ambos
 
   Empresa Empresas @relation(fields: [EMPRESA], references: [ID])
+  Agenda  Agenda[]
 
   @@map("TBUTIL002")
 }
@@ -67,9 +71,9 @@ model Clientes {
   NOME            String      @db.VarChar(120)
   SOBRENOME       String      @db.VarChar(100)
   SIGLA           String?     @db.VarChar(3)
-  TIPOPESSOA      String?      @db.Char(1)
-  CPFCNPJ         String?      @db.VarChar(14)
-  RGIE            String?      @db.VarChar(14)
+  TIPOPESSOA      String?     @db.Char(1)
+  CPFCNPJ         String?     @db.VarChar(14)
+  RGIE            String?     @db.VarChar(14)
   CEP             String?     @db.Char(8)
   ENDERECO        String?     @db.VarChar(150)
   NUM             String?     @db.VarChar(10)
@@ -80,7 +84,7 @@ model Clientes {
   CODUF           String?     @db.Char(2)
   UF              String?     @db.Char(2)
   CONTATO         String?     @db.VarChar(80)
-  TELEFONE1       String?      @db.VarChar(13)
+  TELEFONE1       String?     @db.VarChar(13)
   TELEFONE2       String?     @db.VarChar(13)
   FORMAPAG        String?
   EMAIL           String?     @db.VarChar(250)
@@ -100,6 +104,7 @@ model Clientes {
   Telefones       Telefones[]
 
   Empresas Empresas @relation(fields: [EMPRESA], references: [ID])
+  Agenda   Agenda[]
 
   @@map("TBCLIE001")
 }
@@ -136,4 +141,29 @@ model Telefones {
   Clientes Clientes? @relation(fields: [IDCLIENTE], references: [IDCLIENTE], onDelete: NoAction, onUpdate: NoAction)
 
   @@map("TBGENE002")
+}
+
+model Agenda {
+  IDAGENDA   String   @id @default(uuid())
+  IDCLIENTE  Int
+  IDUSUARIO  String
+  DATAINICIO DateTime
+  DATAFINAL  DateTime
+  TITULO     String   @db.VarChar(100)
+
+  Clientes Clientes? @relation(fields: [IDCLIENTE], references: [IDCLIENTE], onDelete: NoAction, onUpdate: NoAction)
+  Usuarios Usuarios? @relation(fields: [IDUSUARIO], references: [ID], onDelete: NoAction, onUpdate: NoAction)
+
+  @@map("TBAGEN001")
+}
+
+model Grupos {
+  IDGRUPO    Int     @id @default(autoincrement())
+  NOME       String  @db.VarChar(50)
+  ATIVO      String? @db.Char(1)
+  ACRESCIMO  String? @db.Char(1)
+  SABORES    String? @db.Char(1)
+  KIT        String? @db.Char(1)
+  EXIBEVENDA String? @db.Char(1)
+  ICONE      String  @db.VarChar(80)
 }
