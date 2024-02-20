@@ -10,7 +10,6 @@ export class ClientesController {
   @Post()
   async create(@Body() createClienteDto: CreateClienteDto) {
     const RETORNO = await this.clientesService.create(createClienteDto);
-    console.log('Gravou:', RETORNO)
 
     return await RETORNO
   }

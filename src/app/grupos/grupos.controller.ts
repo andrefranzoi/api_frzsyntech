@@ -9,12 +9,14 @@ export class GruposController {
 
   @Post()
   create(@Body() createGrupoDto: CreateGrupoDto) {
+    console.log('createGrupoDto:', createGrupoDto)
     return this.gruposService.create(createGrupoDto);
   }
 
   @Get()
-  findAll() {
-    return this.gruposService.findAll();
+  async findAll() {
+    const RET = await this.gruposService.findAll();
+    return RET
   }
 
   @Get(':id')
@@ -31,4 +33,11 @@ export class GruposController {
   remove(@Param('id') id: string) {
     return this.gruposService.remove(+id);
   }
+
+  @Delete('ativar/:id')
+  ativa(@Param('id') id: string) {
+    return this.gruposService.ativar(+id);
+  }
+
+
 }

@@ -157,13 +157,73 @@ model Agenda {
   @@map("TBAGEN001")
 }
 
+//ANCHOR - *** GRUPOS ***
 model Grupos {
-  IDGRUPO    Int     @id @default(autoincrement())
-  NOME       String  @db.VarChar(50)
-  ATIVO      String? @db.Char(1)
-  ACRESCIMO  String? @db.Char(1)
-  SABORES    String? @db.Char(1)
-  KIT        String? @db.Char(1)
-  EXIBEVENDA String? @db.Char(1)
-  ICONE      String  @db.VarChar(80)
+  IDGRUPO    Int        @id @default(autoincrement())
+  NOME       String     @db.VarChar(50)
+  ATIVO      String?    @db.Char(1)
+  ACRESCIMO  String?    @db.Char(1)
+  SABORES    String?    @db.Char(1)
+  KIT        String?    @db.Char(1)
+  EXIBEVENDA String?    @db.Char(1)
+  ICONE      String?    @db.VarChar(80)
+  Produtos   Produtos[]
+}
+
+//ANCHOR - *** PRODUTOS ***
+model Produtos {
+  IDPRODUTO             Int       @id @default(autoincrement())
+  DESCRICAO             String    @db.VarChar(50)
+  ATIVO                 String?   @db.Char(1)
+  IDUNIDADE             Int
+  GTIN                  String    @db.VarChar(13)
+  CODIGOINTERNO         String    @db.VarChar(20)
+  IDGRUPO               Int
+  PESADO                Boolean?  @default(false)
+  PRECO_CUSTO           Decimal?  @default(0)
+  MARGEM                Decimal?  @default(0)
+  PRECO_VENDA           Decimal
+  ESTO_MIN              Decimal   @default(0)
+  ESTO_MAX              Decimal   @default(0)
+  NCM                   String    @db.Char(8)
+  CEST                  String    @db.Char(7)
+  ORIGEM                String    @db.VarChar(1)
+  CSTIPI                String    @db.VarChar(2)
+  CSTICMS               String    @db.VarChar(2)
+  CSTPIS                String    @db.VarChar(2)
+  CSTCOFINS             String    @db.VarChar(2)
+  CSOSN                 String    @db.VarChar(3)
+  SERIADO               Boolean?  @default(false)
+  ICMS                  Decimal
+  IPI                   Decimal
+  PIS                   Decimal
+  COFINS                Decimal
+  FRETE                 Decimal
+  DATA_CADASTRO         DateTime? @default(now())
+  CFOP                  String    @db.VarChar(4)
+  CFOP_FORA             String    @db.VarChar(4)
+  LOTE                  String?   @db.VarChar(20)
+  PESO_BRUTO            Decimal?
+  PESO_LIQUIDO          Decimal?
+  OBSERVACAO            String?
+  CODIGOPROD_FORNECEDOR String?   @db.VarChar(50)
+
+  Grupos   Grupos    @relation(fields: [IDGRUPO], references: [IDGRUPO], onDelete: NoAction)
+  Unidades Unidades? @relation(fields: [IDUNIDADE], references: [IDUNIDADE])
+}
+
+//ANCHOR - *** UNIDADES ***
+model Unidades {
+  IDUNIDADE Int     @id @default(autoincrement())
+  DESCRICAO String  @db.Char(3)
+  ATIVO     String? @db.Char(1)
+
+  Produtos Produtos[]
+}
+
+//ANCHOR - *** NCM ***
+model NCM {
+  NCM       String  @id @db.Char(8)
+  CEST      String? @db.Char(7)
+  DESCRICAO String? @db.VarChar(250)
 }

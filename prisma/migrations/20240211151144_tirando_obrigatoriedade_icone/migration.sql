@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Grupos" ALTER COLUMN "ICONE" DROP NOT NULL;
